@@ -1,0 +1,30 @@
+import discord
+import feedparser
+import asyncio
+
+TOKEN = "MTQxNzcxNzY1OTkxMDQwNjIxNQ.GaIAVc.bmwQXXTaNqNM7YwqCT_R1nI4yCoHDUaswRtQpA"
+CHANNEL_ID = 1415728123831521393  # 通知したいチャンネルID
+RSS_URL = "https://nitter.privacyredirect.com/CoA_Official_JP/rss"
+
+client = discord.Client(intents=discord.Intents.default())
+
+async def check_feed():
+    await client.wait_until_ready()
+    channel = client.get_channel(CHANNEL_ID)
+    last_entry = None
+
+    while not client.is_closed():
+        feed = feedparser.parse(RSS_URL)
+        if feed.entries:
+            entry = feed.entries[0]
+            if last_entry != entry.link:
+                await channel.send(f"新しいツイート: {entry.link}")
+                last_entry = entry.link
+        await asyncio.sleep(60)  # 60秒ごとにチェック
+
+@client.event
+async def on_ready():
+    print(f"Logged in as {client.user}")
+
+client.loop.create_task(check_feed())
+client.run(TOKEN)
