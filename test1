@@ -2,7 +2,7 @@ import discord
 import feedparser
 import asyncio
 
-TOKEN = "MTQxNzcxNzY1OTkxMDQwNjIxNQ.GaIAVc.bmwQXXTaNqNM7YwqCT_R1nI4yCoHDUaswRtQpA"
+TOKEN = "A"
 CHANNEL_ID = 1415728123831521393  # 通知したいチャンネルID
 RSS_URL = "https://nitter.privacyredirect.com/CoA_Official_JP/rss"
 
